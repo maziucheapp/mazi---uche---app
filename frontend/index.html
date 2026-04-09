@@ -1,38 +1,53 @@
+
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Mazi Uche AI App</title>
+  <title>Mazi Uche AI Cinematic App</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
-<body style="font-family: Arial; padding: 20px;">
 
-  <h1>Mazi Uche AI Cinematic App 🎬</h1>
+<body style="font-family: Arial; background:#0f172a; color:white; text-align:center; padding:20px;">
 
-  <input type="file" id="imageInput" />
-  <br><br>
+  <h1 style="font-size:28px;">🎬 Mazi Uche AI Cinematic App</h1>
+  <p style="color:#cbd5f5;">Turn any image into a cinematic video — FREE</p>
 
-  <button onclick="generateVideo()">Generate Video</button>
+  <div style="margin-top:20px;">
+    <input type="file" id="imageInput" style="padding:10px;" />
+  </div>
 
-  <p id="loading"></p>
+  <div style="margin-top:20px;">
+    <textarea id="description" placeholder="Describe animation..." 
+    style="width:90%; max-width:400px; padding:10px; border-radius:10px;"></textarea>
+  </div>
 
   <br>
 
-  <video id="videoPlayer" controls width="300"></video>
+  <button onclick="generateVideo()" 
+  style="padding:12px 20px; background:#22c55e; border:none; border-radius:10px; font-size:16px;">
+    Generate Video
+  </button>
+
+  <p id="loading" style="margin-top:15px;"></p>
+
+  <div style="margin-top:20px;">
+    <video id="videoPlayer" controls width="320" style="border-radius:12px;"></video>
+  </div>
 
   <script>
     async function generateVideo() {
-      const fileInput = document.getElementById("imageInput");
-      const file = fileInput.files[0];
+      const file = document.getElementById("imageInput").files[0];
+      const description = document.getElementById("description").value;
 
       if (!file) {
         alert("Please upload an image");
         return;
       }
 
-      document.getElementById("loading").innerText = "Generating video...";
+      document.getElementById("loading").innerText = "Generating cinematic video... 🎬";
 
       const formData = new FormData();
       formData.append("image", file);
-      formData.append("description", "cinematic motion");
+      formData.append("description", description);
 
       const res = await fetch("https://mazi-uche-backend.onrender.com/generate-video", {
         method: "POST",
@@ -42,7 +57,6 @@
       const data = await res.json();
 
       document.getElementById("loading").innerText = "";
-
       document.getElementById("videoPlayer").src = data.videoUrl;
     }
   </script>
