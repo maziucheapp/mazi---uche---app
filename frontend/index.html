@@ -34,7 +34,7 @@
       formData.append("image", file);
       formData.append("description", "cinematic motion");
 
-      const res = await fetch("https://mazi-uche-backend.onrender.com /generate-video", {
+      const res = await fetch("https://mazi-uche-backend.onrender.com/generate-video", {
         method: "POST",
         body: formData
       });
