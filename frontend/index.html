@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Mazi Uche AI App</title>
+</head>
+<body style="font-family: Arial; padding: 20px;">
+
+  <h1>Mazi Uche AI Cinematic App 🎬</h1>
+
+  <input type="file" id="imageInput" />
+  <br><br>
+
+  <button onclick="generateVideo()">Generate Video</button>
+
+  <p id="loading"></p>
+
+  <br>
+
+  <video id="videoPlayer" controls width="300"></video>
+
+  <script>
+    async function generateVideo() {
+      const fileInput = document.getElementById("imageInput");
+      const file = fileInput.files[0];
+
+      if (!file) {
+        alert("Please upload an image");
+        return;
+      }
+
+      document.getElementById("loading").innerText = "Generating video...";
+
+      const formData = new FormData();
+      formData.append("image", file);
+      formData.append("description", "cinematic motion");
+
+      const res = await fetch("https://mazi-uche-backend.onrender.com /generate-video", {
+        method: "POST",
+        body: formData
+      });
+
+      const data = await res.json();
+
+      document.getElementById("loading").innerText = "";
+
+      document.getElementById("videoPlayer").src = data.videoUrl;
+    }
+  </script>
+
+</body>
+</html>
